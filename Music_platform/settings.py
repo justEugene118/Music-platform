@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'entry_app',
+    'users_app',
 ]
 
 MIDDLEWARE = [
@@ -51,11 +53,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'Music_platform.urls'
 
+AUTH_USER_MODEL = 'users_app.CustomUser'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [],
+
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
