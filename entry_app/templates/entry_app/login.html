@@ -1,0 +1,32 @@
+{% extends 'index.html' %}
+{% load static %}
+
+
+{% block content %}
+    <link rel="stylesheet" href={% static 'entry_app/login.css' %}>
+
+    <div class="form">
+        <h3 class="text">Log in Page</h3>
+        <form class="login_form" action="" method="post">{% csrf_token %}
+
+            <div class="input-group">
+                {{ login_form.email }}
+            </div>
+            <div class="input-group">
+                {{ login_form.password }}
+            </div>
+
+            {% if login_form.errors %}
+                <div class="alert-danger">
+                    <a>{{ login_form.errors }}</a>
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                <input class="submit" type="submit" value="LogIn">
+            </div>
+
+        </form>
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+{% load static %}
+
+
+{% block content %}
+    <link rel="stylesheet" href={% static 'entry_app/signup.css' %}>
+
+    <h3 style="text-align: center; color: azure">Sign Up page</h3>
+    <form class="signup_form" action="" method="post">{% csrf_token %}
+        <div class="input-group">
+            {{ signup_form.username }}
+        </div>
+        <div class="input-group">
+            {{ signup_form.email }}
+        </div>
+        <div class="input-group">
+            {{ signup_form.password1 }}
+        </div>
+        <div class="input-group">
+            {{ signup_form.password2 }}
+        </div>
+
+
+        <button type="submit">SignUp</button>
+    </form>
+{% endblock content %}

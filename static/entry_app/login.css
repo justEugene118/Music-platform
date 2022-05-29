@@ -1,0 +1,59 @@
+.form .text {
+    color: azure;
+    text-align: center;
+}
+
+.form-input{
+    padding: 10px;
+    width: 100%;
+    border-radius: 10px;
+    text-indent: 15%;
+    margin-top: 20px;
+    box-sizing: border-box;
+}
+
+.form-input:hover, .form-input:focus{
+    padding: 10px;
+    border-radius: 10px;
+    text-indent: 15%;
+    box-sizing:border-box;
+}
+
+
+
+.input-group{
+    position: relative;
+    display: block;
+}
+
+.login_form {
+    margin: auto;
+    width: 30%;
+}
+
+.submit{
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #171717;
+    font-weight: bold;
+    color: aliceblue;
+    cursor: pointer;
+    width: 90%;
+    transform: translate(+5%, -5%);
+    margin-top: 50px;
+    box-sizing:border-box;
+}
+
+.submit:hover{
+    background-color: rgba(52, 52, 52, 0.51);
+    color: aliceblue;
+    background-color: #171717;
+    padding: 8px;
+}
+
+.errorlist {
+    list-style: none;
+    color: azure;
+    padding-inline-start: 20px;
+}

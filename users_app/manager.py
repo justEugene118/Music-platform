@@ -1,12 +1,13 @@
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import gettext_lazy as _
 
+"""
+    Full guide for custom user is here: https://django.fun/docs/django/ru/4.0/topics/auth/customizing/
+"""
+
 
 class CustomUserManager(BaseUserManager):
-    """
-    Custom user model manager where email is the unique identifiers
-    for authentication instead of usernames.
-    """
+
     def create_user(self, email, password, username, **extra_fields):
         """
         Create and save a User with the given email, username and password.
@@ -34,3 +35,5 @@ class CustomUserManager(BaseUserManager):
         if extra_fields.get('is_superuser') is not True:
             raise ValueError(_('Superuser must have is_superuser=True.'))
         return self.create_user(email, password, **extra_fields)
+
+
