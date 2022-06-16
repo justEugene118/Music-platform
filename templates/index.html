@@ -10,20 +10,20 @@
     <header>
         <nav>
             <div class="mainlink">
-                <a href="{% url 'main' %}"> Main page </a>
+                <a href="{% url 'entry_app:main_app:music' %}"> Music-platform </a>
             </div>
 
             {% if request.user.is_authenticated %}
                 <div class="username">
                     <ul>
-                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                        <li><a href="{% url 'entry_app:logout' %}">Logout</a></li>
                         <li><p>Hello, {{ request.user.username }}</p></li>
                     </ul>
                 </div>
             {% else %}
                 <ul>
-                    <li><a href="{% url 'signup' %}"> Sign Up </a></li>
-                    <li><a href="{% url 'login' %}"> Log In </a></li>
+                    <li><a href="{% url 'entry_app:signup' %}"> Sign Up </a></li>
+                    <li><a href="{% url 'entry_app:login' %}"> Log In </a></li>
                 </ul>
             {% endif %}
 

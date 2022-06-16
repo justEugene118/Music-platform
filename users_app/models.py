@@ -21,7 +21,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     object = CustomUserManager()
 
     def __str__(self):
-        return self.email
+        return self.username
 
     class Meta:
         app_label = 'users_app'
