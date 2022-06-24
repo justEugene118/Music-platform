@@ -1,0 +1,47 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href={% static 'main_app/recent.css' %}>
+    <br>
+    <form class="form-horizontal" role="search" method="get" action=''>
+    <div class="form-group">
+          <div class="input-group">
+                <div class="input-group">
+                      <input type="text" class="form-control input-lg " name="q" style="border-radius: 5px;" value="{{ request.GET.q }}" placeholder= "Search Songs "/>
+                      <span class='input-group-btn mx-2'>
+                            <button type="submit" style="border-radius: 5px;" class="btn btn-primary">Search</button>
+                      </span>
+                </div>
+          </div>
+    </div>
+    </form>
+
+    {% if not query_search %}
+        <header class="section-heading">
+            <h5 class="section-title">RECENTLY PLAYED</h5>
+        </header>
+      <hr>
+    {% else %}
+        <header class="section-heading">
+            <h5 class="section-title">SEARCH RESULTS</h5>
+        </header>
+        <hr>
+    {% endif %}
+
+    <div class="row" style="margin-right: 65px;margin-left:-15px;">
+        {% if recent_songs %}
+            {% for song in recent_songs %}
+                <div style="padding: 10px" class="hovereffect">
+                    <img src="{{ song.image_file.url}}" class="img-responsive" height="100" width="100" style="border-radius: 8px 8px 8px 8px;">
+
+                    <div class="overlay">
+                        <a style="color: azure" href="{% url 'entry_app:main_app:play_recent_song' song.id %}">Play recent song</a>
+                        <a style="color: azure" href="{% url 'entry_app:main_app:song_detail' song.id %}">Song detail</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+  </div>
+
+{% endblock %}

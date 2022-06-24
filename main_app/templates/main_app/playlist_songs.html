@@ -1,0 +1,55 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href={% static 'main_app/playlist_songs.css' %}>
+    <h3>This playlist detail page</h3>
+
+    <center>
+        <h3>Playlist-{{ playlist_name }}</h3>
+    </center>
+    {% if songs %}
+    <table class="table table-hover table-primary">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Image</th>
+                <th scope="col">Song Name</th>
+                <th scope="col">Creator</th>
+                <th scope="col">Song</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for song in songs %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td><img src="{{ song.song.image_file.url}}" class="img-responsive" height="100" width="100" style="border-radius: 8px 8px 8px 8px;"></td>
+                <td><a style="color: azure" href="{% url 'entry_app:main_app:song_detail' song.id %}">{{ song.song.song_name }}</a></td>
+
+                <td>{{ song.song.creator.creator_name }}</td>
+                <td>
+                    <audio controls>
+                        <source src="{{ song.song.audio_file.url }}" type="audio/mpeg">
+                    </audio>
+                </td>
+                <td>
+                    <form method="post">
+                        {% csrf_token %}
+                        <input class="btn btn-primary" type="submit" value="Remove" name={{ song.song.id }}>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+
+    {% else %}
+        <center>
+            <h3>Your playlist is empty</h3>
+        </center>
+    {% endif %}
+
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href={% static 'main_app/creator.css' %}>
+
+    {% if request.user.is_creator %}
+        <h3>Hello, {{ request.user.creator_name }}</h3>
+
+        {% if songs %}
+            {% for song in songs %}
+                <div class="row">
+                    <img src="{{ song.image_file.url}}" class="img-responsive" height="70" width="70" style="border-radius: 8px 8px 8px 8px;">
+
+                    <div class="overlay">
+                        <a id="a1" href="{% url 'entry_app:main_app:play_recent_song' song.id %}">{{ song.song_name }}</a>
+                        <a id="a2" href="{% url 'entry_app:main_app:song_detail' song.id %}">Song detail</a>
+                    </div>
+
+                    <form action="{% url 'entry_app:main_app:song_delete' song_id=song.id %}" method="POST">{% csrf_token %}
+                        <button class="btn">Delete</button>
+                    </form>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h3>You dont have any songs uploaded yet! Please upload at least one</h3>
+            <a href="{% url 'entry_app:main_app:add_song' %}">Add a song</a>
+        {% endif %}
+
+    {% else %}
+        <h3>You are not a creator, but you can become one real quick</h3>
+        <a href="{% url 'entry_app:main_app:become_creator' %}">Become Creator</a>
+    {% endif %}
+
+{% endblock content %}

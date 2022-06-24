@@ -1,0 +1,18 @@
+.row {
+    margin-right: 65px;
+    margin-left:-15px;
+}
+
+.row .overlay {
+    color: azure;
+}
+
+.row .hovereffect {
+    padding: 25px;
+    display: block;
+}
+
+.row .hovereffect img {
+    float: left;
+    border-radius: 30px;
+}

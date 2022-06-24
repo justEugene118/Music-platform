@@ -1,0 +1,127 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href={% static 'main_app/detail.css' %}>
+    <h3>This is detail page</h3>
+    <br>
+    <div class="container">
+        <div class="card">
+            <div class="container-fliud">
+                <div class="wrapper-row">
+                    <div class="preview-col-md-5">
+
+                        <div class="preview-pic tab-content">
+                            <div class="tab-pane active"><img src="{{ songs.image_file.url }}" height="300" width="300"
+                                    style="padding:20px;border-radius: 60px 60px 60px 60px;"></div>
+                        </div>
+
+                    </div>
+                    <div class="details-col-md-6">
+                        <br>
+                        <h3 class="product-title">{{ songs.song_name }}</h3>
+                        <h4>Creator: {{ songs.creator.creator_name }}</h4>
+                        <h4>Release Year: {{ songs.data_created.year }}</h4>
+                        <h4>User rating: {{ rating.rating__avg }}</h4>
+                        <br>
+
+
+                        <!-- Playlist creation form -->
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <form>
+                                                <div class="form-group">
+                                                    <label for="recipient-name" class="col-form-label">Name</label>
+                                                    <input type="text" class="form-control" id="recipient-name"
+                                                        name="playlist">
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Close</button>
+                                            <button type="Submit" class="btn btn-primary">Create Playlist</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <form method="post" class="playlist_add">
+                            {% csrf_token %}
+                            <select style="margin-left: 10px;width: 170px;" class="btn btn-success" onChange="this.form.submit();" name="playlist">
+                                <option selected="selected" disabled style="color: black;">Add to Playlist</option>
+                                {% if playlists %}
+                                {% for playlist in playlists %}
+                                    <option value={{ playlist.playlist_name }}> {{ playlist.playlist_name }} </option>
+                                {% endfor %}
+                                {% endif %}
+                            </select>
+                        </form>
+
+                        <form method="post">
+                            {% csrf_token %}
+                            {% if is_favourite %}
+                            <span class="d-flex align-items-center mt-2 ml-2">
+                                <!-- <i class="heart fa fa-heart my-auto"></i> -->
+                                <button type="submit" name="rm-fav" class="btn btn-danger btn-block"
+                                    style="width: 358px;margin-left:-8px;background-color: red;">Remove from Favourites</button>
+                            </span>
+                            {% else %}
+                            <span class="d-flex align-items-center mt-2 ml-2">
+                                <!-- <i class="heart fa fa-heart my-auto"></i> -->
+                                <button type="submit" name="add-fav" class="btn btn-danger btn-block"
+                                    style="width: 358px;margin-left:-8px;background-color: red;"><i class="heart fa fa-heart-o my-auto" style="color:white"></i> Add to Favourites</button>
+
+                                <!-- <input type="submit" id="favbtn" class="btn btn-primary" name="add-fav" value="Add to Favourites"> -->
+                            </span>
+
+                            {% endif %}
+                        </form>
+
+                        <br>
+                        <center>
+                            Comments
+                        </center>
+                        <br>
+
+                        <form class="comment_form" method="post">{% csrf_token %}
+                            <div class="input-group">
+                                <a>Comment:       </a>
+                                {{ comment_form.text }}
+                            </div>
+                            <div class="input-group">
+                                <a>Rating(not required): </a>
+                                {{ comment_form.rating }}
+                            </div>
+
+                            <button type="submit">Add comment</button>
+                        </form>
+
+                        <br>
+                        {% if comments %}
+                            {% for comment in comments %}
+                                <div style="padding: 10px" class="comment">
+                                    {{ comment.user.username }}:
+                                    {{ comment.text }}
+                                    {% if comment.rating %}
+                                        rating: {{ comment.rating }}
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+
+                        {% else %}
+                            <a style="color:azure;">No comments here yet</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

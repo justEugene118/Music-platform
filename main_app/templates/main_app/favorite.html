@@ -1,0 +1,57 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href={% static 'main_app/main.css' %}>
+    <h3>This is favorite songs page</h3>
+
+    <center>
+      <h3>Favourites</h3>
+    </center>
+
+    {% if songs %}
+    <table class="table table-hover table-primary">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <td scope="col">Image</td>
+                <th scope="col">Song Name</th>
+                <th scope="col">Singer</th>
+                <th scope="col">Song</th>
+                <th scope="col">Action</th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            {% if songs %}
+            {% for song in songs %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td><img src="{{ song.image_file.url}}" class="img-responsive" height="60" width="60" style="border-radius: 8px 8px 8px 8px;"></td>
+                    <td><a style="color: azure" href="{% url 'entry_app:main_app:song_detail' song.id %}">{{ song.song_name }}</a></td>
+                    <td>{{song.singer}}</td>
+                <td>
+                    <audio controls>
+                        <source src="{{ song.audio_file.url }}" type="audio/mpeg">
+                    </audio>
+                </td>
+                <td>
+                    <form method="post">
+                        {% csrf_token %}
+                        <input class="btn btn-primary" type="submit" value="Remove" name={{ song.id }}>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+
+    {% else %}
+        <center>
+            <h3>Your favorite list is empty</h3>
+        </center>
+    {% endif %}
+
+{% endblock %}

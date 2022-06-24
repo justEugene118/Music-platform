@@ -10,7 +10,24 @@
     <header>
         <nav>
             <div class="mainlink">
-                <a href="{% url 'entry_app:main_app:music' %}"> Music-platform </a>
+                <ul>
+                    {% if request.user.is_superuser %}
+                        <li><a href="http://127.0.0.1:8000/admin/">Admin page</a></li>
+                    {% endif %}
+                    {% if request.user.is_creator %}
+                        <li><a href="http://127.0.0.1:8000/music/add_song/">Add song</a></li>
+
+                        <li><a href="{% url 'entry_app:main_app:creator_profile' %}">{{ request.user.creator_name }}</a></li>
+
+                        {% else %}
+
+                            <li><a href="{% url 'entry_app:main_app:become_creator' %}">Become creator</a></li>
+
+                    {% endif %}
+                    <li><a href="{% url 'entry_app:main_app:favourite' %}">Favorite</a></li>
+                    <li><a href="{% url 'entry_app:main_app:playlist' %}">Playlists</a></li>
+                    <li><a href="{% url 'entry_app:main_app:music' %}"> Music-platform </a></li>
+                </ul>
             </div>
 
             {% if request.user.is_authenticated %}
@@ -27,6 +44,7 @@
                 </ul>
             {% endif %}
 
+
         </nav>
     </header>
 
@@ -36,10 +54,27 @@
         {% endblock content %}
     </div>
 
-
-    <footer>
-        <p>some info into footer</p>
-        <a href="http://127.0.0.1:8000/admin/">Admin page</a>
-    </footer>
+    {% if request.user.is_authenticated %}
+        {% if last_played %}
+        <footer>
+            <div class="player">
+                <div class="left">
+                    <img src="{{ last_played.image_file.url }}" height="70" width="70">
+                </div>
+                <div class="right">
+                    <div class="top">
+                        <ul>
+                            <li><a href="{% url 'entry_app:main_app:song_detail' song_id=last_played.id %}">{{last_played.song_name}}</a></li>
+                            <li><a>{{last_played.creator.creator_name}}</a></li>
+                        </ul>
+                    </div>
+                    <div class="bottom">
+                        <audio controls=""><source src="{{ last_played.audio_file.url }}" type="audio/mpeg"></audio>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        {% endif %}
+    {% endif %}
 </body>
 </html>

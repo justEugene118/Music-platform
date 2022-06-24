@@ -1,0 +1,20 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href={% static 'main_app/become_creator.css' %}>
+    <h3>Here you can become a creator</h3>
+
+    <form class="become_creator" method="post">{% csrf_token %}
+        <div class="input-group">
+            <a>Creator name</a>
+            {{ creator_form.creator_name }}
+        </div>
+        <div class="input-group">
+            <a>Creator description</a>
+            {{ creator_form.creator_descr }}
+        </div>
+        <button type="submit">Become creator</button>
+    </form>
+
+{% endblock %}

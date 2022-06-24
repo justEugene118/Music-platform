@@ -2,5 +2,71 @@
 {% load static %}
 
 {% block content %}
-    <h3>This is true main page</h3>
+    <link rel="stylesheet" href={% static 'main_app/main.css' %}>
+
+    <br>
+    <form class="form-horizontal" role="search" method="get" action=''>
+    <div class="form-group">
+          <div class="input-group">
+                <div class="input-group">
+                      <input type="text" class="form-control input-lg " name="q" style="border-radius: 5px;" value="{{ request.GET.q }}" placeholder= "Search Songs "/>
+                      <span class='input-group-btn mx-2'>
+                            <button type="submit" style="border-radius: 5px;" class="btn btn-primary">Search</button>
+                      </span>
+                </div>
+          </div>
+    </div>
+    </form>
+
+    <hr>
+    {% if not query_search %}
+        <h3 style="color: azure"><a href="{% url 'entry_app:main_app:recent' %}">Recent Songs</a></h3>
+        <div class="row">
+            {% if recent_songs %}
+                {% for song in recent_songs %}
+                    <div class="hovereffect">
+                        <img src="{{ song.image_file.url}}" class="img-responsive" height="50" width="50" style="border-radius: 8px 8px 8px 8px;">
+
+                        <div class="overlay">
+                            <a id="a1" href="{% url 'entry_app:main_app:play_recent_song' song.id %}">{{ song.song_name }}</a>
+                            <a id="a2" href="{% url 'entry_app:main_app:song_detail' song.id %}">Song detail</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <br>
+        <hr>
+        <h3 style="color: azure"><a href="{% url 'entry_app:main_app:playlist' %}">Your Playlists</a></h3>
+        <div class="row">
+            {% if playlists %}
+                {% for playlist in playlists %}
+                    <div class="hovereffect">
+                        <a href="{% url 'entry_app:main_app:playlist_songs' playlist.playlist_name %}">{{ playlist.playlist_name }}</a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <a>You don`t have any playlists yet. You can add create one on songs detail pages</a>
+            {% endif %}
+        </div>
+    {% else %}
+        <h3 style="color: azure"><a href="{% url 'entry_app:main_app:recent' %}">Search results</a></h3>
+        <div class="row">
+            {% if recent_songs %}
+                {% for song in recent_songs %}
+                    <div class="hovereffect">
+                        <img src="{{ song.image_file.url}}" class="img-responsive" height="50" width="50" style="border-radius: 8px 8px 8px 8px;">
+
+                        <div class="overlay">
+                            <a id="a1" href="{% url 'entry_app:main_app:play_recent_song' song.id %}">{{ song.song_name }}</a>
+                            <a id="a2" href="{% url 'entry_app:main_app:song_detail' song.id %}">Song detail</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    {% endif %}
+
+
 {% endblock %}

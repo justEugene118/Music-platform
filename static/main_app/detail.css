@@ -1,0 +1,13 @@
+.wrapper-row {
+    display: block;
+color: azure;
+}
+
+.preview-col-md-5 {
+    float: left;
+}
+
+.details-col-md-6 {
+    padding: 30px;
+    float: left;
+}

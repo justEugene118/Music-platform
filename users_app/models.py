@@ -10,9 +10,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
     username = models.CharField(max_length=32)
     date_joined = models.DateTimeField(default=timezone.now)
+
     is_creator = models.BooleanField(default=False)
+    creator_name = models.CharField(default='', max_length=32, null=True)
+    creator_descr = models.CharField(default='', blank=True, max_length=255, null=True)
+
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+
     is_active = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'email'
@@ -25,4 +30,3 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         app_label = 'users_app'
-

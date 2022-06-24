@@ -1,0 +1,14 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+    <form class="add_song" method="post" enctype="multipart/form-data">{% csrf_token %}
+        {{ upload_form.song_name }}
+        {{ upload_form.genres }}
+        {{ upload_form.image_file }}
+        {{ upload_form.audio_file }}
+        {{ upload_form.data_created }}
+
+        <button type="submit">Upload</button>
+    </form>
+{% endblock %}
