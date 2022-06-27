@@ -66,14 +66,11 @@ def signup_view(request):
         return redirect('entry_app:main_app:music')
     else:
         context = {}
+
         if request.POST:
             form = SignUpForm(request.POST)
             if form.is_valid():
-                form.save()
-
-                email = form.cleaned_data.get('form')
-                raw_password = form.cleaned_data.get('password1')
-                new_user = authenticate(email=email, password=raw_password)
+                new_user = form.save()
 
                 login(request, new_user)
                 return redirect('entry_app:main_app:music')

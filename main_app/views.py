@@ -24,7 +24,7 @@ def main_view(request):
             last_played_song = Song.objects.get(id=last_played_id)
         else:
             first_time = True
-            last_played_song = Song.objects.get(id=1)
+            last_played_song = Song.objects.get(id=3)
 
         # playlist
         playlists = Playlist.objects.filter(user=request.user).values('playlist_name').distinct
